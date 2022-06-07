@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 // ** globalRouter **
 export const getSignup = (req, res) =>
   res.render("signup", { pageTitle: "Sign Up" });
+
 export const postSignup = async (req, res) => {
   const { name, email, username, password, password2, location } = req.body;
   const pageTitle = "Sign Up";
@@ -157,6 +158,28 @@ export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
-export const edit = (req, res) => res.send("Edit User");
+
+// getEdit
+export const getEdit = (req, res) => {
+  res.render("editUser", { pageTitle: "Edit Profile" });
+};
+
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, email, username, location },
+  } = req;
+  await User.findByIdAndUpdate(_id, {
+    name,
+    email,
+    username,
+    location,
+  });
+  return res.render("editUser");
+};
+
 export const remove = (req, res) => res.send("Remove User");
+
 export const detail = (req, res) => res.send("Detail User");

@@ -7,12 +7,24 @@ import {
   postEdit,
   postUpload,
 } from "../controllers/roomController";
+import { protectorMiddleware } from "../middlewares";
 
 const roomRouter = express.Router();
 
 roomRouter.get("/:id([0-9a-f]{24})", detail);
-roomRouter.route("/:id([0-9a-f]{24})/edit").get(getEdit).post(postEdit);
-roomRouter.route("/:id([0-9a-f]{24})/delete").get(deleteRoom);
-roomRouter.route("/upload").get(getUpload).post(postUpload);
+roomRouter
+  .route("/:id([0-9a-f]{24})/edit")
+  .all(protectorMiddleware)
+  .get(getEdit)
+  .post(postEdit);
+roomRouter
+  .route("/:id([0-9a-f]{24})/delete")
+  .all(protectorMiddleware)
+  .get(deleteRoom);
+roomRouter
+  .route("/upload")
+  .all(protectorMiddleware)
+  .get(getUpload)
+  .post(postUpload);
 
 export default roomRouter;

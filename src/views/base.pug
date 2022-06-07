@@ -11,11 +11,12 @@ html(lang="ko")
                         a(href="/") Home
                     li 
                         a(href="/search") Search
-                    li 
-                        a(href="/rooms/upload") Upload Room
+
                     if loggedIn
                         li 
-                            a(href="/profile") #{loggedInUser.name}'s Profile
+                            a(href="/rooms/upload") Upload Room
+                        li 
+                            a(href="/users/edit") Edit Profile
                         li 
                             a(href="/users/logout") Log Out
                     else

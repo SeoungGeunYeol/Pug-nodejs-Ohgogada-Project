@@ -59,7 +59,7 @@ export const getEdit = async (req, res) => {
   if (!room) {
     return res.status(404).render("404", { pageTitle: "Room not found." });
   }
-  return res.render("edit", { pageTitle: `Edit : ${room.title}`, room });
+  return res.render("editRoom", { pageTitle: `Edit : ${room.title}`, room });
 };
 
 export const postEdit = async (req, res) => {
