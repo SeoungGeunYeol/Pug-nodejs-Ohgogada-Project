@@ -1,0 +1,12 @@
+extends base
+
+block content
+    if errorMessage 
+        span=errorMessage
+    form(method="POST")
+        input(name="title", placeholder="Title", required, type="text", maxlength=30)
+        input(name="description", placeholder="Description", required, type="text", minlength=10)
+        input(name="city", placeholder="City", required, type="text")
+        input(name="price", placeholder="Price", required, type="text")
+        input(name="amenities", placeholder="Amenities", required, type="text")
+        input(type="submit", value="Upload Room")

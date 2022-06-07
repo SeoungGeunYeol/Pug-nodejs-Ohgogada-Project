@@ -1,0 +1,10 @@
+mixin room(room)
+  div
+    h4 
+      a(href=`/rooms/${room.id}`)=room.title
+    p=room.description 
+    ul
+      each amenity in room.amenities
+        li=amenity
+    small=room.createdAt
+    hr
