@@ -208,17 +208,36 @@ export const postEdit = async (req, res) => {
 // ** Change Password **
 // getChangePassword
 export const getChangePassword = (req, res) => {
+  if (req.session.user.socialOnly === true) {
+    return res.redirect("/");
+  }
   return res.render("users/change-password", { pageTitle: "Change Password" });
 };
 // postChangePassword
-export const postChangePassword = (req, res) => {
-  if (password !== password2) {
-    return res.status(HTTP_BAD_REQUEST).render("users/signup", {
-      pageTitle,
-      errorMessage: "Password confirmation does not match.",
+export const postChangePassword = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { oldPassword, newPassword, newPassword2 },
+  } = req;
+  const user = await User.findById(_id);
+  const ok = await bcrypt.compare(oldPassword, user.password);
+  if (!ok) {
+    return res.status(HTTP_BAD_REQUEST).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "The current password is incorrect.",
     });
   }
-  return res.redirect("/");
+  if (newPassword !== newPassword2) {
+    return res.status(HTTP_BAD_REQUEST).render("users/change-password", {
+      pageTitle: "Change Password",
+      errorMessage: "New password does not match the comfirmation.",
+    });
+  }
+  user.password = newPassword;
+  await user.save();
+  return res.redirect("/users/edit");
 };
 
 export const remove = (req, res) => res.send("Remove User");

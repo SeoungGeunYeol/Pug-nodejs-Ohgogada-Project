@@ -1,0 +1,21 @@
+header
+    nav
+        ul 
+            li  
+                a(href="/") Home
+            li 
+                a(href="/search") Search
+
+            if loggedIn
+                li 
+                    a(href="/rooms/upload") Upload Room
+                li 
+                    a(href="/users/edit") Edit Profile
+                li 
+                    a(href="/users/logout") Log Out
+            else
+                li 
+                    a(href="/login") Log In
+                li 
+                    a(href="/signup") Sign Up
+    h1=pageTitle
