@@ -7,7 +7,7 @@ import {
   postEdit,
   postUpload,
 } from "../controllers/roomController";
-import { protectorMiddleware } from "../middlewares";
+import { protectorMiddleware, roomPhotoUpload } from "../middlewares";
 
 const roomRouter = express.Router();
 
@@ -25,6 +25,6 @@ roomRouter
   .route("/upload")
   .all(protectorMiddleware)
   .get(getUpload)
-  .post(postUpload);
+  .post(roomPhotoUpload.single("photo"), postUpload);
 
 export default roomRouter;

@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const roomSchema = new mongoose.Schema({
   title: { type: String, required: true, trim: true, maxlength: 30 },
+  fileUrl: { type: String, required: true },
   description: { type: String, required: true, trim: true, minlength: 10 },
   city: { type: String, required: true, trim: true },
   price: { type: Number, required: true, trim: true },

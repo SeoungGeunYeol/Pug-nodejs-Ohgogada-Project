@@ -1,6 +1,7 @@
 extends ../base
 
 block content
+    img(src="/" + room.fileUrl, width="300", height="300")
     div 
         p=room.description
         small=room.createdAt

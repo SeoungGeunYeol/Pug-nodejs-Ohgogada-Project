@@ -23,4 +23,6 @@ export const publicOnlyMiddleware = (req, res, next) => {
   }
 };
 
-export const uploadFiles = multer({ dest: "uploads/" });
+export const avatarUpload = multer({ dest: "uploads/avatars/" });
+
+export const roomPhotoUpload = multer({ dest: "uploads/photos/" });

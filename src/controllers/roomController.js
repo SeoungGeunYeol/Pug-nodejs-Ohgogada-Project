@@ -88,6 +88,8 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   // here we will add a room to the rooms array.
+  const { path: fileUrl } = req.file;
+  console.log("res.file : ", req.file);
   const { title, description, city, price, amenities } = req.body;
   try {
     await Room.create({
@@ -96,9 +98,11 @@ export const postUpload = async (req, res) => {
       city,
       price,
       amenities: Room.formatAmenities(amenities),
+      fileUrl,
     });
     return res.redirect("/");
   } catch (error) {
+    console.log("error : ", error);
     return res.render("rooms/upload", {
       pageTitle: "Upload Room",
       errorMessage: error._message,

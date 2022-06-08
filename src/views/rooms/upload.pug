@@ -3,7 +3,9 @@ extends ../base
 block content
     if errorMessage 
         span=errorMessage
-    form(method="POST")
+    form(method="POST", enctype="multipart/form-data")
+        label(for="photo") Room Photo
+        input(type="file", name="photo", id="photo", accept=".png, .jpg, .jepg", required)
         input(name="title", placeholder="Title", required, type="text", maxlength=30)
         input(name="description", placeholder="Description", required, type="text", minlength=10)
         input(name="city", placeholder="City", required, type="text")
