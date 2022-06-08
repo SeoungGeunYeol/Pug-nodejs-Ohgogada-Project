@@ -1,4 +1,4 @@
-extends base
+extends ../base
 
 block content
     if errorMessage
@@ -6,7 +6,7 @@ block content
     form(method="POST")
         input(name="email", placeholder="Email", type="email", required)
         input(name="password", placeholder="Password", type="password", required)
-        input(type="submit", placeholder="submit", value="Sign Up")
+        input(type="submit", placeholder="submit", value="Log In")
         br
         a(href="/users/github/start") Continue with Github &rarr;
     hr

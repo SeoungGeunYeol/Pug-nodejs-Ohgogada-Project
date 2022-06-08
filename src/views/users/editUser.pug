@@ -1,9 +1,15 @@
-extends base
+extends ../base
 
 block content
   form(method="POST")
     input(name="name",value=loggedInUser.name,  placeholder="Name", type="text", required)
     input(name="email", value=loggedInUser.email, placeholder="Email", type="email", required)
+    if errorMessageEmail
+      p=errorMessageEmail
     input(name="username", value=loggedInUser.username, placeholder="Username", type="text", required)
+    if errorMessageUsername
+      p=errorMessageUsername
     input(name="location", value=loggedInUser.location, placeholder="Location", type="text", required)
     input(type="submit", placeholder="submit", value="Update Profile")
+    hr
+    a(href="change-password") Change password &rarr;

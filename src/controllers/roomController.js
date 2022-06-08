@@ -19,7 +19,7 @@ async function 선언은 AsyncFunction객체를 반환하는 하나의 비동기
 // globalRouter
 export const home = async (req, res) => {
   const rooms = await Room.find({}).sort({ createdAt: "desc" });
-  return res.render("home", { pageTitle: "Home", rooms });
+  return res.render("rooms/home", { pageTitle: "Home", rooms });
 };
 
 /*
@@ -40,7 +40,7 @@ export const search = async (req, res) => {
     });
   }
   console.log(rooms);
-  return res.render("search", { pageTitle: "Search", rooms });
+  return res.render("rooms/search", { pageTitle: "Search", rooms });
 };
 
 // roomRouter
@@ -50,7 +50,7 @@ export const detail = async (req, res) => {
   if (!room) {
     return res.status(404).render("404", { pageTitle: "Room not found." });
   }
-  return res.render("detail", { pageTitle: room.title, room });
+  return res.render("rooms/detail", { pageTitle: room.title, room });
 };
 
 export const getEdit = async (req, res) => {
@@ -59,7 +59,10 @@ export const getEdit = async (req, res) => {
   if (!room) {
     return res.status(404).render("404", { pageTitle: "Room not found." });
   }
-  return res.render("editRoom", { pageTitle: `Edit : ${room.title}`, room });
+  return res.render("rooms/editRoom", {
+    pageTitle: `Edit : ${room.title}`,
+    room,
+  });
 };
 
 export const postEdit = async (req, res) => {
@@ -80,7 +83,7 @@ export const postEdit = async (req, res) => {
 };
 
 export const getUpload = (req, res) => {
-  return res.render("upload", { pageTitle: "Upload Room" });
+  return res.render("rooms/upload", { pageTitle: "Upload Room" });
 };
 
 export const postUpload = async (req, res) => {
@@ -96,7 +99,7 @@ export const postUpload = async (req, res) => {
     });
     return res.redirect("/");
   } catch (error) {
-    return res.render("upload", {
+    return res.render("rooms/upload", {
       pageTitle: "Upload Room",
       errorMessage: error._message,
     });

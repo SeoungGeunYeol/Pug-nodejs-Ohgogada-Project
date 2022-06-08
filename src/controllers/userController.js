@@ -2,22 +2,27 @@ import User from "../models/User";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
-// ** globalRouter **
-export const getSignup = (req, res) =>
-  res.render("signup", { pageTitle: "Sign Up" });
+const HTTP_BAD_REQUEST = 400;
 
+// ◼ globalRouter ◼
+// ** Sign Up **
+// getSignup
+export const getSignup = (req, res) => {
+  return res.render("users/signup", { pageTitle: "Sign Up" });
+};
+// postSignup
 export const postSignup = async (req, res) => {
   const { name, email, username, password, password2, location } = req.body;
   const pageTitle = "Sign Up";
   if (password !== password2) {
-    return res.status(400).render("signup", {
+    return res.status(HTTP_BAD_REQUEST).render("users/signup", {
       pageTitle,
       errorMessage: "Password confirmation does not match.",
     });
   }
   const exists = await User.exists({ $or: [{ username }, { email }] });
   if (exists) {
-    return res.status(400).render("signup", {
+    return res.status(HTTP_BAD_REQUEST).render("users/signup", {
       pageTitle,
       errorMessage: "This username/email is already taken.",
     });
@@ -32,22 +37,26 @@ export const postSignup = async (req, res) => {
     });
     return res.redirect("/login");
   } catch (error) {
-    return res.render("signup", {
+    return res.render("users/signup", {
       pageTitle: "Upload Room",
       errorMessage: error._message,
     });
   }
 };
-export const getLogin = (req, res) =>
-  res.render("login", { pageTitle: "Log In" });
 
+// ** LogIn **
+// getLogin
+export const getLogin = (req, res) => {
+  return res.render("users/login", { pageTitle: "Log In" });
+};
+// postLogin
 export const postLogin = async (req, res) => {
   const { email, password } = req.body;
   const pageTitle = "Log In";
   const user = await User.findOne({ email, socialOnly: false });
   // check if account exists
   if (!user) {
-    return res.status(400).render("login", {
+    return res.status(HTTP_BAD_REQUEST).render("users/login", {
       pageTitle,
       errorMessage: "An account with this email does not exists",
     });
@@ -55,19 +64,20 @@ export const postLogin = async (req, res) => {
   // check if paswword correct
   const ok = await bcrypt.compare(password, user.password);
   if (!ok) {
-    return res.status(400).render("login", {
+    return res.status(HTTP_BAD_REQUEST).render("users/login", {
       pageTitle,
       errorMessage: "Wrong Password",
     });
   }
   req.session.loggedIn = true;
   req.session.user = user;
-  res.redirect("/");
+  return res.redirect("/");
 };
 
-// ** userRouter **
-// getGithubLogin (memo.txt 참조)
-export const getGithubLogin = (req, res) => {
+// ◼ userRouter ◼
+// ** GithubLogin **
+// startGithubLogin (memo.txt 참조)
+export const startGithubLogin = (req, res) => {
   const baseUrl = "https://github.com/login/oauth/authorize";
   const config = {
     client_id: process.env.GH_CLIENTID,
@@ -78,20 +88,8 @@ export const getGithubLogin = (req, res) => {
   const finalUrl = `${baseUrl}?${params}`;
   return res.redirect(finalUrl);
 };
-
-/*
-fetch()  함수
--- HTTP 요청 전송 기능을 제공하는 Wen API이다.(JS내장 라이브러리)
--- Server와 비동기 요청 방식을 기능한다.
--- 
-1. fetch('url')로 다른 서버를 통해 데이터를 가져올 수 있다.
-but res.body 에 담겨있는 url은 제대로 된 객체를 받아올 수 없다.
-2. json함수가 res의 스트림을 가져와 끝까지 읽고, res.body의 텍스트를 promise형태로
-반환한다.
-3. 다른 서버의 데이터를 object형식으로 받아온다.
-*/
-
-export const postGithubLogin = async (req, res) => {
+// finishGithubLogin
+export const finishGithubLogin = async (req, res) => {
   const baseUrl = "https://github.com/login/oauth/access_token";
   const config = {
     client_id: process.env.GH_CLIENTID,
@@ -153,31 +151,74 @@ export const postGithubLogin = async (req, res) => {
   }
 };
 
-// log Out session.destroy()
+// ** logOut **
 export const logout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
 
+// ** Edit **
 // getEdit
 export const getEdit = (req, res) => {
-  res.render("editUser", { pageTitle: "Edit Profile" });
+  return res.render("users/editUser", { pageTitle: "Edit Profile" });
 };
-
+// postEdit
 export const postEdit = async (req, res) => {
+  const pageTitle = "Edit Profile";
   const {
     session: {
       user: { _id },
     },
     body: { name, email, username, location },
   } = req;
-  await User.findByIdAndUpdate(_id, {
-    name,
-    email,
-    username,
-    location,
-  });
-  return res.render("editUser");
+
+  if (req.session.user.email !== email) {
+    const exists = await User.exists({ email });
+    if (exists) {
+      return res.status(HTTP_BAD_REQUEST).render("users/editUser", {
+        pageTitle,
+        errorMessageEmail: "This email is aleady taken",
+      });
+    }
+  }
+
+  if (req.session.user.username !== username) {
+    const exists = await User.exists({ username });
+    if (exists) {
+      return res.status(HTTP_BAD_REQUEST).render("users/editUser", {
+        pageTitle,
+        errorMessageUsername: "This username is aleady taken",
+      });
+    }
+  }
+
+  const updateUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updateUser;
+  return res.redirect("edit");
+};
+// ** Change Password **
+// getChangePassword
+export const getChangePassword = (req, res) => {
+  return res.render("users/change-password", { pageTitle: "Change Password" });
+};
+// postChangePassword
+export const postChangePassword = (req, res) => {
+  if (password !== password2) {
+    return res.status(HTTP_BAD_REQUEST).render("users/signup", {
+      pageTitle,
+      errorMessage: "Password confirmation does not match.",
+    });
+  }
+  return res.redirect("/");
 };
 
 export const remove = (req, res) => res.send("Remove User");
