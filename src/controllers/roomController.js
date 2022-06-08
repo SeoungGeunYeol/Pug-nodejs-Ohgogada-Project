@@ -47,6 +47,7 @@ export const search = async (req, res) => {
 export const detail = async (req, res) => {
   const { id } = req.params;
   const room = await Room.findById(id);
+  console.log(room);
   if (!room) {
     return res.status(404).render("404", { pageTitle: "Room not found." });
   }
@@ -88,6 +89,9 @@ export const getUpload = (req, res) => {
 
 export const postUpload = async (req, res) => {
   // here we will add a room to the rooms array.
+  const {
+    user: { _id },
+  } = req.session;
   const { path: fileUrl } = req.file;
   console.log("res.file : ", req.file);
   const { title, description, city, price, amenities } = req.body;
@@ -99,6 +103,7 @@ export const postUpload = async (req, res) => {
       price,
       amenities: Room.formatAmenities(amenities),
       fileUrl,
+      host: _id,
     });
     return res.redirect("/");
   } catch (error) {

@@ -242,6 +242,15 @@ export const postChangePassword = async (req, res) => {
   return res.redirect("/users/edit");
 };
 
-export const remove = (req, res) => res.send("Remove User");
+export const detail = async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findById(id);
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found" });
+  }
+  return res.render("users/profile", {
+    pageTitle: `${user.username}'s Profile`,
+  });
+};
 
-export const detail = (req, res) => res.send("Detail User");
+export const remove = (req, res) => res.send("Remove User");

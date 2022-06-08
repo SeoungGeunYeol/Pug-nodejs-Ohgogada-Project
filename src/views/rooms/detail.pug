@@ -5,8 +5,9 @@ block content
     div 
         p=room.description
         small=room.createdAt
-    a(href=`${room.id}/edit`) Edit Room &rarr;
-    br
-    a(href=`${room.id}/delete`) Delete Room &rarr;
+    if String(room.host) === loggedInUser._id
+        a(href=`${room.id}/edit`) Edit Room &rarr;
+        br
+        a(hre f=`${room.id}/delete`) Delete Room &rarr;
     
 
