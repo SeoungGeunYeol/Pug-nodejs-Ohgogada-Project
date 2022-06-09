@@ -5,7 +5,10 @@ block content
     div 
         p=room.description
         small=room.createdAt
-    if String(room.host) === loggedInUser._id
+    div 
+        small Uploaded by 
+            a(href=`/users/${room.host._id}`) #{room.host.username}
+    if String(room.host._id) === loggedInUser._id
         a(href=`${room.id}/edit`) Edit Room &rarr;
         br
         a(hre f=`${room.id}/delete`) Delete Room &rarr;

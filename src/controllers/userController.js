@@ -1,4 +1,5 @@
 import User from "../models/User";
+import Room from "../models/Room";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt";
 
@@ -250,6 +251,7 @@ export const detail = async (req, res) => {
   }
   return res.render("users/profile", {
     pageTitle: `${user.username}'s Profile`,
+    user,
   });
 };
 

@@ -1,5 +1,5 @@
 import Room from "../models/Room";
-
+import User from "../models/User";
 /*
 Room.find({}, (error, rooms) => {
   if(error) {
@@ -39,15 +39,13 @@ export const search = async (req, res) => {
       },
     });
   }
-  console.log(rooms);
   return res.render("rooms/search", { pageTitle: "Search", rooms });
 };
 
 // roomRouter
 export const detail = async (req, res) => {
   const { id } = req.params;
-  const room = await Room.findById(id);
-  console.log(room);
+  const room = await Room.findById(id).populate("host");
   if (!room) {
     return res.status(404).render("404", { pageTitle: "Room not found." });
   }
@@ -93,7 +91,6 @@ export const postUpload = async (req, res) => {
     user: { _id },
   } = req.session;
   const { path: fileUrl } = req.file;
-  console.log("res.file : ", req.file);
   const { title, description, city, price, amenities } = req.body;
   try {
     await Room.create({

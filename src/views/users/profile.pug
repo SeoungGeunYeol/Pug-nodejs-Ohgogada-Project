@@ -1,4 +1,8 @@
 extends ../base
+include ../mixins/room
 
 block content
-    h1 hello!
+    each room in rooms
+        +room(room)
+    else
+        li 아무것도 찾지 못했습니다.
