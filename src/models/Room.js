@@ -10,7 +10,6 @@ const roomSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   meta: {
     views: { type: Number, default: 0 },
-    rating: { type: Number, default: 0 },
   },
   host: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });

@@ -2,7 +2,7 @@ extends ../base
 include ../mixins/room
 
 block content
-    each room in rooms
+    each room in user.rooms
         +room(room)
     else
         li 아무것도 찾지 못했습니다.

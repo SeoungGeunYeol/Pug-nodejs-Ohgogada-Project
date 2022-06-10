@@ -9,12 +9,13 @@ const userSchema = new mongoose.Schema({
   password: { type: String },
   name: { type: String, required: true },
   location: String,
+  rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: "Room" }],
 });
 
 userSchema.pre("save", async function () {
-  console.log("User password:", this.password);
-  this.password = await bcrypt.hash(this.password, 5);
-  console.log("Hashed password:", this.password);
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 5);
+  }
 });
 
 const User = mongoose.model("User", userSchema);
