@@ -1,2 +1,7 @@
-@import "_reset";
-@import "_variables";
+@import "./_reset";
+@import "./_variables";
+
+body {
+  background-color: $gray;
+  color: white;
+}
