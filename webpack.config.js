@@ -1,21 +1,30 @@
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 /*
- entry : 처리하고자 하는 파일의 경로
- output : 결과물
- path.resolve() 
+ * entry : 처리하고자 하는 파일의 경로
+ * output : 결과물
+ * path.resolve() 
  메서드는 경로 세그먼트 시퀀스를 절대 경로로 해석하는 데 사용됩니다. 
  경로 세그먼트가 전달되지 않으면 path.resolve()는
  현재 작업 디렉토리의 절대 경로를 반환합니다.
- (__dirname: 현재 파일 위치의 절대 경로)
- /\.js$/ = RegExp 정규표션식
+ * __dirname: 현재 파일 위치의 절대 경로)
+ * /\.js$/ = RegExp 정규표션식
+ * MiniCssExtractPlugin :  CSS를 별도의 파일로 추출
 */
 module.exports = {
   entry: "./src/client/js/main.js",
   mode: "development",
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: "css/styles.css",
+    }),
+  ],
+  watch: true,
   output: {
-    filename: "main.js",
-    path: path.resolve(__dirname, "assets", "js"),
+    filename: "js/main.js",
+    path: path.resolve(__dirname, "assets"),
+    clean: true,
   },
   module: {
     rules: [
@@ -30,7 +39,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
     ],
   },
