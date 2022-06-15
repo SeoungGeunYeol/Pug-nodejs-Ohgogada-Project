@@ -1,11 +1,11 @@
 header
+    a(href="/").header__logo
+        i.fa-solid.fa-house
     nav
         ul 
-            li  
-                a(href="/") Home
             li 
-                a(href="/search") Search
-
+                a(href="/search") 
+                    i.fas.fa-search
             if loggedIn
                 li 
                     a(href="/rooms/upload") Upload Room
@@ -20,4 +20,3 @@ header
                     a(href="/login") Log In
                 li 
                     a(href="/signup") Sign Up
-    h1=pageTitle

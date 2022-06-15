@@ -70,6 +70,7 @@ app.use(
 
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
+app.use("/imgs", express.static("img"));
 app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/users", userRouter);

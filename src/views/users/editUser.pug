@@ -1,19 +1,17 @@
 extends ../base
 
 block content
-  img(src="/" + loggedInUser.avatarUrl, width="100", height="100")
-  form(method="POST", enctype="multipart/form-data")
+  form(method="POST", enctype="multipart/form-data").edit-profile__form
     label(for="avatar") Avatar 
     input(type="file", name="avatar", id="avatar", accept=".png, .jpg, .jepg")
-    input(name="name",value=loggedInUser.name,  placeholder="Name", type="text", required)
+    label(for="email") Email 
     input(name="email", value=loggedInUser.email, placeholder="Email", type="email", required)
-    if errorMessageEmail
-      p=errorMessageEmail
+    label(for="username") Username 
     input(name="username", value=loggedInUser.username, placeholder="Username", type="text", required)
-    if errorMessageUsername
-      p=errorMessageUsername
+    label(for="location") Location 
     input(name="location", value=loggedInUser.location, placeholder="Location", type="text", required)
-    input(type="submit", placeholder="submit", value="Update Profile")
+    input.editUser_input(type="submit", placeholder="submit", value="Update Profile")
     if !loggedInUser.socialOnly
-      hr
-      a(href="change-password") Change password &rarr;
+      div.edit-profile__password
+        a(href="change-password") Change password 
+          i.fas.fa-arrow-right

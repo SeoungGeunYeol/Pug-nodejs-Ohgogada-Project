@@ -2,7 +2,12 @@ extends ../base
 include ../mixins/room
 
 block content
-    each room in user.rooms
-        +room(room)
-    else
-        li 아무것도 찾지 못했습니다.
+    div.profile__data
+        img(src="/" + user.avatarUrl).avatar
+        h3=user.name
+    div.video-grid
+        each room in user.rooms
+            +room(room)
+        else
+            span.empty__message Not videos found 
+                i.fas.fa-ban

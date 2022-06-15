@@ -12,7 +12,7 @@ export const getSignup = (req, res) => {
 };
 // postSignup
 export const postSignup = async (req, res) => {
-  const { name, email, username, password, password2, location } = req.body;
+  const { email, username, password, password2, location } = req.body;
   const pageTitle = "Sign Up";
   if (password !== password2) {
     return res.status(HTTP_BAD_REQUEST).render("users/signup", {
@@ -29,7 +29,6 @@ export const postSignup = async (req, res) => {
   }
   try {
     await User.create({
-      name,
       email,
       username,
       password,
@@ -134,7 +133,6 @@ export const finishGithubLogin = async (req, res) => {
     // create user
     if (!user) {
       user = await User.create({
-        name: userData.name,
         avatarUrl: userData.avatar_url,
         email: emailObj.email,
         username: userData.login,
@@ -169,7 +167,7 @@ export const postEdit = async (req, res) => {
     session: {
       user: { _id, avatarUrl },
     },
-    body: { name, email, username, location },
+    body: { email, username, location },
     file,
   } = req;
 
@@ -197,7 +195,6 @@ export const postEdit = async (req, res) => {
     _id,
     {
       avatarUrl: file ? file.path : avatarUrl,
-      name,
       email,
       username,
       location,
@@ -244,7 +241,13 @@ export const postChangePassword = async (req, res) => {
 
 export const detail = async (req, res) => {
   const { id } = req.params;
-  const user = await User.findById(id).populate("rooms");
+  const user = await User.findById(id).populate({
+    path: "rooms",
+    populate: {
+      path: "host",
+      model: "User",
+    },
+  });
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found" });
   }

@@ -1,10 +1,8 @@
 mixin room(room)
-  div
-    h4 
-      a(href=`/rooms/${room.id}`)=room.title
-    p=room.description 
-    ul
-      each amenity in room.amenities
-        li=amenity
-    small=room.createdAt
-    hr
+    div.room-card
+        a(href=`/rooms/${room.id}`)
+            img.room-mixin__thumb(src="/" + room.fileUrl)
+            div.room-mixin__data
+                div.room-mixin__title
+                    span.room-mixin__title__span #{room.title}, #{room.city}
+                span.room-views #{room.meta.views} 회

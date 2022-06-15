@@ -15,7 +15,9 @@ const HTTP_PAGE_NOT_FOUND = 404;
 
 // globalRouter
 export const home = async (req, res) => {
-  const rooms = await Room.find({}).sort({ createdAt: "desc" });
+  const rooms = await Room.find({})
+    .sort({ createdAt: "desc" })
+    .populate("host");
   return res.render("rooms/home", { pageTitle: "Home", rooms });
 };
 
@@ -34,7 +36,7 @@ export const search = async (req, res) => {
       title: {
         $regex: new RegExp(`${keyword}$`, "i"),
       },
-    });
+    }).populate("host");
   }
   return res.render("rooms/search", { pageTitle: "Search", rooms });
 };

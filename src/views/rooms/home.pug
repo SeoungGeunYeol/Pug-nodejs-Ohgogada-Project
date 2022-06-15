@@ -2,8 +2,9 @@ extends ../base
 include ../mixins/room
 
 block content
-    ul
+    div.room-flex
         each room in rooms
             +room(room)
         else
-            li 아무것도 찾지 못했습니다.
+            span.empty__message No videos found 
+                i.fas.fa-ban
