@@ -1,10 +1,9 @@
 extends ../base
 
 block content
-  h4 Update room
   form(method="POST")
     input(name="title", placeholder="Room Title", value=room.title, type="text", required)
-    input(name="description", placeholder="Description", value=room.description, type="text", minlength=10, required)
+    textarea(name="description", placeholder="Description" minlength=10, required)=room.description
     input(name="city", placeholder="City", value=room.city, type="text", required)
     input(name="price", placeholder="Price", value=room.price, type="text", required)
     input(name="amenities", placeholder="Amenities", value=room.amenities.join(), type="text", required)

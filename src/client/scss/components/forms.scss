@@ -34,3 +34,20 @@ input[type="submit"],
   cursor: pointer;
   display: block;
 }
+
+textarea {
+  all: unset;
+  padding: 15px 20px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: $bg-input;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: $white;
+  width: 90%;
+  height: 80px;
+  resize: none;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+  }
+}

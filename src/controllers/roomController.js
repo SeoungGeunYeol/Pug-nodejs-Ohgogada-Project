@@ -85,7 +85,6 @@ export const postEdit = async (req, res) => {
       .status(HTTP_PAGE_NOT_FOUND)
       .render("404", { pageTitle: "Room not found." });
   }
-  console.log(String(room.host));
   if (String(room.host) !== req.session.user._id) {
     return res.status(HTTP_FORBIDDEN).redirect("/");
   }
@@ -139,7 +138,7 @@ export const deleteRoom = async (req, res) => {
     user: { _id },
   } = req.session;
   const room = await Room.findById(id);
-  const user = await Room.findById(_id);
+  const user = await User.findById(_id);
   if (!room) {
     return res
       .status(HTTP_PAGE_NOT_FOUND)

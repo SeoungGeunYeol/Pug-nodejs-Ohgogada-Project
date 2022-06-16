@@ -1,10 +1,27 @@
 extends ../base
 
 block content
-    img(src="/" + room.fileUrl, width="300", height="300")
-    div 
-        p=room.description
-        small=room.createdAt
+    div.container.detail_photos
+        img(src="/" + room.fileUrl).detail_photos_firtsphoto
+    div.container.detail_contend
+        div.detail_title
+            h1.detail_title_h1 #{room.title} 
+                span.detail_title_span ❤ 
+                    span.detail_title_span_views=room.meta.views
+    div.container.datail__hr                                                                                                                   
+        div.datail__hr_div
+    div.container.detail_location
+        h3.detail_location_span 
+            i.fas.fa-map-location-dot.detail_location_icon  
+            |  #{room.city}
+    div.container.detail_main_contend
+        div.detail_description_contend
+            h3.detail_h3 Description
+                div
+                    p.detail_description_p=room.description
+        div.detail_amenities_contend
+            h3.detail_h3 Amenities
+
     div 
         small Uploaded by 
             a(href=`/users/${room.host._id}`) #{room.host.username}
