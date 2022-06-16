@@ -51,9 +51,14 @@
 }
 .detail_location {
   margin: 30px 0 50px 0;
-  .detail_location_span {
+  .detail_location_h3 {
+    display: flex;
+    justify-content: space-between;
     font-size: 28px;
   }
+}
+.detail_location_a {
+  font-weight: 500;
 }
 .detail_main_contend {
   margin: 0 auto;
@@ -61,12 +66,11 @@
   justify-content: space-between;
   .detail_description_contend {
     width: 50%;
-    margin: 30px 0;
     .detail_h3 {
       font-size: 36px;
       font-weight: 600;
       .detail_description_p {
-        margin-top: 20px;
+        margin: 30px 0 130px;
         font-size: 24px;
         font-weight: 300;
         text-align: justify;
@@ -78,6 +82,23 @@
     .detail_h3 {
       font-size: 36px;
       font-weight: 600;
+      .detail_ul {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        text-align: center;
+        .detail_li {
+          display: flex;
+          display: inline-block;
+          margin: 30px 8px 5px 8px;
+          font-size: 24px;
+          font-weight: 300;
+          border-radius: 15px;
+          background-color: $bg-input;
+          color: $white;
+          padding: 12px;
+        }
+      }
     }
   }
 }

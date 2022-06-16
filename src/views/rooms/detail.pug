@@ -11,20 +11,20 @@ block content
     div.container.datail__hr                                                                                                                   
         div.datail__hr_div
     div.container.detail_location
-        h3.detail_location_span 
-            i.fas.fa-map-location-dot.detail_location_icon  
-            |  #{room.city}
+        h3.detail_location_h3 
+            i.fas.fa-map-location-dot  #{room.city} 
+            span
+                a.detail_location_a(href=`/users/${room.host._id}`) HOST : #{room.host.username}
     div.container.detail_main_contend
         div.detail_description_contend
             h3.detail_h3 Description
-                div
-                    p.detail_description_p=room.description
+                p.detail_description_p=room.description
         div.detail_amenities_contend
             h3.detail_h3 Amenities
-
-    div 
-        small Uploaded by 
-            a(href=`/users/${room.host._id}`) #{room.host.username}
+                ul.detail_ul
+                    each amenity in room.amenities
+                        li.detail_li=amenity
+            
     if String(room.host._id) === loggedInUser._id
         a(href=`${room.id}/edit`) Edit Room &rarr;
         br
