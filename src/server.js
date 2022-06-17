@@ -5,6 +5,7 @@ import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import roomRouter from "./routers/roomRouter";
+import flash from "express-flash";
 import { localsMiddleware } from "./middlewares";
 import { connection } from "mongoose";
 
@@ -68,6 +69,7 @@ app.use(
   })
 );
 
+app.use(flash());
 app.use(localsMiddleware);
 app.use("/uploads", express.static("uploads"));
 app.use("/imgs", express.static("img"));

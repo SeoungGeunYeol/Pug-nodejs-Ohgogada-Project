@@ -64,7 +64,8 @@ export const getEdit = async (req, res) => {
       .status(HTTP_PAGE_NOT_FOUND)
       .render("404", { pageTitle: "Room not found." });
   }
-  if (String(room.host) !== req.session.user._id) {
+  if (String(room.host) !== String(_id)) {
+    req.flash("error", "Not authorized");
     return res.status(HTTP_FORBIDDEN).redirect("/");
   }
   return res.render("rooms/editRoom", {
@@ -85,7 +86,8 @@ export const postEdit = async (req, res) => {
       .status(HTTP_PAGE_NOT_FOUND)
       .render("404", { pageTitle: "Room not found." });
   }
-  if (String(room.host) !== req.session.user._id) {
+  if (String(room.host) !== String(_id)) {
+    req.flash("error", "You are not the the owner of the room.");
     return res.status(HTTP_FORBIDDEN).redirect("/");
   }
   await Room.findByIdAndUpdate(id, {
@@ -95,6 +97,7 @@ export const postEdit = async (req, res) => {
     price,
     amenities: Room.formatAmenities(amenities),
   });
+  req.flash("success", "Changes saved.");
   return res.redirect(`/rooms/${id}`);
 };
 

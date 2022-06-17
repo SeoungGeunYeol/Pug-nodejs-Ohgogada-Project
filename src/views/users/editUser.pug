@@ -1,6 +1,8 @@
 extends ../base
 
 block content
+  if messages.update
+    +message("success", messages.update)
   form(method="POST", enctype="multipart/form-data").edit-profile__form
     label(for="avatar") Avatar 
     input(type="file", name="avatar", id="avatar", accept=".png, .jpg, .jepg")

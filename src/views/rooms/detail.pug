@@ -6,8 +6,6 @@ block content
     div.container.detail_contend
         div.detail_title
             h1.detail_title_h1 #{room.title} 
-                span.detail_title_span ❤ 
-                    span.detail_title_span_views=room.meta.views
     div.container.datail__hr                                                                                                                   
         div.datail__hr_div
     div.container.detail_location
@@ -29,5 +27,5 @@ block content
         a(href=`${room.id}/edit`) Edit Room &rarr;
         br
         a(href=`${room.id}/delete`) Delete Room &rarr;
-    
+
 

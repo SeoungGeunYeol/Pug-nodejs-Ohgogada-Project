@@ -8,6 +8,11 @@ form {
     border: 1px solid rgba($color: $white, $alpha: 0.8);
   }
 }
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px $bg-input inset;
+  box-shadow: 0 0 0 1000px $bg-input inset;
+  -webkit-text-fill-color: #fff;
+}
 
 input {
   all: unset;

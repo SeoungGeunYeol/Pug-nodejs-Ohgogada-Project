@@ -24,7 +24,7 @@ export const postSignup = async (req, res) => {
   if (exists) {
     return res.status(HTTP_BAD_REQUEST).render("users/signup", {
       pageTitle,
-      errorMessage: "This username/email is already taken.",
+      errorMessage: "This Nickname/email is already taken.",
     });
   }
   try {
@@ -34,6 +34,7 @@ export const postSignup = async (req, res) => {
       password,
       location,
     });
+    req.flash("join", "Congratulations! Log In please");
     return res.redirect("/login");
   } catch (error) {
     return res.render("users/signup", {
@@ -65,7 +66,7 @@ export const postLogin = async (req, res) => {
   if (!ok) {
     return res.status(HTTP_BAD_REQUEST).render("users/login", {
       pageTitle,
-      errorMessage: "Wrong Password",
+      errorMessage: "The password is wrong",
     });
   }
   req.session.loggedIn = true;
@@ -151,7 +152,10 @@ export const finishGithubLogin = async (req, res) => {
 
 // ** logOut **
 export const logout = (req, res) => {
-  req.session.destroy();
+  req.session.user = null;
+  res.locals.loggedInUser = req.session.user;
+  req.session.loggedIn = false;
+  req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
 
@@ -202,12 +206,14 @@ export const postEdit = async (req, res) => {
     { new: true }
   );
   req.session.user = updateUser;
+  req.flash("update", "Update");
   return res.redirect("edit");
 };
 // ** Change Password **
 // getChangePassword
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password.");
     return res.redirect("/");
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
@@ -236,6 +242,7 @@ export const postChangePassword = async (req, res) => {
   }
   user.password = newPassword;
   await user.save();
+  req.flash("info", "Password updated");
   return res.redirect("/users/edit");
 };
 

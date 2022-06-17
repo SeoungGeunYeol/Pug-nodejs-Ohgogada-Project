@@ -2,7 +2,9 @@ extends ../base
 
 block content
     if errorMessage
-        span=errorMessage
+        +message("error", errorMessage)
+    if messages.join
+        +message("success", messages.join)
     form(method="POST")
         include ../partials/social-login.pug
         input(name="email", placeholder="Email", type="email", required)
