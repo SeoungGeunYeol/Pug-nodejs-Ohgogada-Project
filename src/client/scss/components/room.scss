@@ -1,4 +1,7 @@
 .room-card {
+  display: flex;
+  display: inline-block;
+  min-width: 300px;
   width: 23%;
   margin-bottom: 40px;
   padding: 0 8px 0 8px;

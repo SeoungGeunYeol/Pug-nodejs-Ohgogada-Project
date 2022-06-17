@@ -10,13 +10,21 @@ header
                 li 
                     a(href="/rooms/upload") Upload Room
                 li 
-                    a(href=`/users/${loggedInUser._id}`) My Room List
-                li 
                     a(href="/users/edit") Edit Profile
                 li 
                     a(href="/users/logout") Log Out
+                li
+                    a(href=`/users/${loggedInUser._id}`)
+                        if loggedInUser.avatarUrl === ""
+                            span 😀
+                        else
+                            if loggedInUser.avatarUrl
+                                if loggedInUser.avatarUrl.includes("github")
+                                    img.header__avatar(src=loggedInUser.avatarUrl)
+                                else
+                                    img.header__avatar(src=loggedInUser.avatarUrl)
             else
                 li 
                     a(href="/login") Log In
                 li 
-                    a(href="/signup") Sign Up
+                    a(href="/signup").header__btn Sign Up

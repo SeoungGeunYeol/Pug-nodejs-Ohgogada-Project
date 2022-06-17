@@ -4,7 +4,7 @@ include ../mixins/room
 block content
     div.profile__data
         img(src="/" + user.avatarUrl).avatar
-        h3=user.name
+        h3=user.username
     div.room-flex
         each room in user.rooms
             +room(room)

@@ -23,6 +23,8 @@ export const publicOnlyMiddleware = (req, res, next) => {
   }
 };
 
+// multer() : 이미지, 동영상 등을 비롯한 여러 가지 파일들을
+// 멀티파트 형식으로 업로드할 때 사용하는 미들웨어이다.
 export const avatarUpload = multer({ dest: "uploads/avatars/" });
 
 export const roomPhotoUpload = multer({ dest: "uploads/photos/" });
