@@ -2,6 +2,7 @@ import "dotenv/config";
 import "./db";
 import "./models/Room";
 import "./models/User";
+import "./models/Review";
 import app from "./server";
 
 const PORT = 4000;

@@ -18,6 +18,7 @@ const BASE_JS = "./src/client/js/";
 module.exports = {
   entry: {
     main: BASE_JS + "main.js",
+    reviewCreate: BASE_JS + "reviewCreate.js",
   },
   plugins: [
     new MiniCssExtractPlugin({

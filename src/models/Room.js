@@ -8,6 +8,9 @@ const roomSchema = new mongoose.Schema({
   price: { type: Number, required: true, trim: true },
   amenities: [{ type: String, trim: true }],
   createdAt: { type: Date, default: Date.now },
+  reviews: [
+    { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Review" },
+  ],
   host: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
 });
 

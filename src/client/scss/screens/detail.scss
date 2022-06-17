@@ -102,3 +102,24 @@
     }
   }
 }
+.detail_room_reviews {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 100%;
+  .detail_room_review {
+    flex-wrap: wrap;
+    max-width: 50%;
+    margin: 0;
+    background-color: rgba($color: $bg, $alpha: 0.7);
+    border-radius: 10px;
+    border: 1px solid rgba($color: $white, $alpha: 0.8);
+    padding: 30px;
+    color: black;
+    margin-bottom: 10px;
+    .detail_room_review_textarea {
+      height: 120px;
+      margin-bottom: 15px;
+    }
+  }
+}
