@@ -5,6 +5,7 @@ import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import roomRouter from "./routers/roomRouter";
+import apiRouter from "./routers/apiRouter";
 import flash from "express-flash";
 import { localsMiddleware } from "./middlewares";
 import { connection } from "mongoose";
@@ -25,7 +26,7 @@ app.use(logger);
 /* 
 - express 프레임 워크가 front 단 form 데이터를 읽기위함
 - extended:false는 nodejs에 내장된 querystring 모듈 사용
-- .urlencoded()은 x-www-form-urlencoded형태의 데이터를
+- .urlencoded()은 x-www-form-urlencoded형태의 데이터로
 - .json()은 JSON형태의 데이터를 해석해줍니다.
 - express 인코딩은 body-parser를 이용한 것
 ❗
@@ -33,6 +34,7 @@ import bodyParser from "body-parser";
 app.use(bodyParser.urlencoed(extended: true)); 와 같음
 */
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 /*  
 세션 데이터는 쿠키 자체에 저장되지 않고 세션 ID에만 저장됩니다.
@@ -77,5 +79,6 @@ app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/rooms", roomRouter);
+app.use("/api", apiRouter);
 
 export default app;

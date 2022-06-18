@@ -1,5 +1,6 @@
 import Room from "../models/Room";
 import User from "../models/User";
+import Review from "../models/Review";
 /*
 callback: 에러를 바로 볼 수 있지만 기다리는 기능이 없어서 DB에서 불러오는
 시간이 있어서 순서가 꼬인다
@@ -10,6 +11,7 @@ async function 선언은 AsyncFunction객체를 반환하는 하나의 비동기
 사용하여 결과를 반환합니다. 그러나 비동기 함수를 사용하는 코드의 구문과 구조는,
 표준 동기 함수를 사용하는것과 많이 비슷합니다.
 */
+const HTTP_CREATED = 201;
 const HTTP_FORBIDDEN = 403;
 const HTTP_PAGE_NOT_FOUND = 404;
 
@@ -44,7 +46,8 @@ export const search = async (req, res) => {
 // roomRouter
 export const detail = async (req, res) => {
   const { id } = req.params;
-  const room = await Room.findById(id).populate("host");
+  const room = await Room.findById(id).populate("host").populate("reviews");
+  console.log(room);
   if (!room) {
     return res
       .status(HTTP_PAGE_NOT_FOUND)
@@ -155,4 +158,24 @@ export const deleteRoom = async (req, res) => {
   user.rooms.splice(user.rooms.indexOf(id), 1);
   user.save();
   return res.redirect("/");
+};
+
+export const createReview = async (req, res) => {
+  const {
+    session: { user },
+    body: { text },
+    params: { id },
+  } = req;
+  const room = await Room.findById(id);
+  if (!room) {
+    return res.sendStatus(HTTP_PAGE_NOT_FOUND);
+  }
+  const review = await Review.create({
+    text,
+    host: user._id,
+    room: id,
+  });
+  room.reviews.push(review._id);
+  room.save();
+  return res.sendStatus(HTTP_CREATED);
 };

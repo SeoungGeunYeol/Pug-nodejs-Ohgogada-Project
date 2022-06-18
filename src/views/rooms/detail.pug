@@ -23,15 +23,22 @@ block content
                     each amenity in room.amenities
                         li.detail_li=amenity
     if loggedIn
-        div.detail_room_reviews
-            form.detail_room_review
-                textarea.detail_room_review_textarea(cols="30", rows="10", placeholder="💬 Write a nice review")
+        div#detail_room_add_reviews(data-id=room._id)
+            form.detail_room_add_review#reviewForm
+                textarea.detail_room_add_review_textarea(cols="30", rows="10", placeholder="💬 Write a nice review")
                 button Add Comment
+    div.detail_room_reviews
+        ul
+            each review in room.reviews.reverse()
+                li.detail_room_review 
+                    i.fas.fa-comment
+                    |   #{review.text}
     if String(room.host._id) === loggedInUser._id
         a(href=`${room.id}/edit`) Edit Room &rarr;
         br
         a(href=`${room.id}/delete`) Delete Room &rarr;
 
-block scripts 
-    script(src="/static/js/reviewCreate.js") 
+block scripts
+    if loggedIn
+        script(src="/static/js/reviewSelector.js") 
 
