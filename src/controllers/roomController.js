@@ -47,7 +47,6 @@ export const search = async (req, res) => {
 export const detail = async (req, res) => {
   const { id } = req.params;
   const room = await Room.findById(id).populate("host").populate("reviews");
-  console.log(room);
   if (!room) {
     return res
       .status(HTTP_PAGE_NOT_FOUND)
@@ -177,5 +176,5 @@ export const createReview = async (req, res) => {
   });
   room.reviews.push(review._id);
   room.save();
-  return res.sendStatus(HTTP_CREATED);
+  res.status(HTTP_CREATED).json({ newReviewId: review._id });
 };

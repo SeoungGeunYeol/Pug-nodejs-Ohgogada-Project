@@ -23,16 +23,17 @@ block content
                     each amenity in room.amenities
                         li.detail_li=amenity
     if loggedIn
-        div#detail_room_add_reviews(data-id=room._id)
+        div#roomContainer.detail_room_add_reviews(data-id=room._id)
             form.detail_room_add_review#reviewForm
                 textarea.detail_room_add_review_textarea(cols="30", rows="10", placeholder="💬 Write a nice review")
                 button Add Comment
     div.detail_room_reviews
         ul
             each review in room.reviews.reverse()
-                li.detail_room_review 
+                li.detail_room_review(data-id=review.id)
                     i.fas.fa-comment
-                    |   #{review.text}
+                    span  #{review.text}
+                    span  ❌
     if String(room.host._id) === loggedInUser._id
         a(href=`${room.id}/edit`) Edit Room &rarr;
         br
