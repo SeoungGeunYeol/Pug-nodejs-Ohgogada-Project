@@ -10,11 +10,11 @@ const addReview = (text, id) => {
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
   span.innerText = ` ${text}`;
-  const deletespan = document.createElement("span");
-  deletespan.innerText = ` ❌`;
+  const deleteButton = document.createElement("button");
+  deleteButton.innerText = ` ❌`;
   newReview.appendChild(icon);
   newReview.appendChild(span);
-  newReview.appendChild(deletespan);
+  newReview.appendChild(deleteButton);
   roomReviews.prepend(newReview);
 };
 
