@@ -265,4 +265,7 @@ export const detail = async (req, res) => {
   });
 };
 
-export const remove = (req, res) => res.send("Remove User");
+export const badlogout = (req, res, next) => {
+  req.flash("error", "Not authorized");
+  return res.redirect("/");
+};

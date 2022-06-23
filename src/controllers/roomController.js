@@ -129,10 +129,9 @@ export const postUpload = async (req, res) => {
     user.save();
     return res.redirect("/");
   } catch (error) {
-    console.log("error : ", error);
+    req.flash("error", error._message);
     return res.render("rooms/upload", {
       pageTitle: "Upload Room",
-      errorMessage: error._message,
     });
   }
 };

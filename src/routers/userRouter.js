@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  remove,
   detail,
   startGithubLogin,
   finishGithubLogin,
@@ -32,6 +31,5 @@ userRouter
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 userRouter.get("/:id", detail);
-userRouter.get("/remove", remove);
 
 export default userRouter;

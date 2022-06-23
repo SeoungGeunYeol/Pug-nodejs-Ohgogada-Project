@@ -1,8 +1,8 @@
 extends ../base
 
 block content
-    if errorMessage 
-        span=errorMessage
+    if messages.error 
+        +message("error", messages.error)
     form(method="POST", enctype="multipart/form-data")
         input(type="file", name="photo", id="photo", accept=".png, .jpg, .jepg", required)
         input(name="title", placeholder="Title", required, type="text", maxlength=30)

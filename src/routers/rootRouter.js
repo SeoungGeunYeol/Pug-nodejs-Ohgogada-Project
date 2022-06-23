@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  badlogout,
   getLogin,
   getSignup,
   postLogin,
@@ -22,5 +23,6 @@ rootRouter
   .get(getLogin)
   .post(postLogin);
 rootRouter.get("/search", search);
+rootRouter.get("/logout", badlogout);
 
 export default rootRouter;
